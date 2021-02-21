@@ -43,7 +43,10 @@ function Weather(data) {
 }
 
 app.use('*', (req, res) => {
-	res.status(404).send('Page Not Found');
+	res.status(500).json({
+		status: 500,
+		errorMessage: 'Sorry, something went wrong',
+	});
 });
 
 const PORT = process.env.PORT || 3000;
