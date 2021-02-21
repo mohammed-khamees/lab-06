@@ -14,43 +14,43 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 app.get('/', (req, res) => {
-	res.send('Home Page');
+  res.send('Home Page');
 });
 
 app.get('/location', (req, res) => {
-	const place = new Location(locationData);
-	res.json(place);
+  const place = new Location(locationData);
+  res.json(place);
 });
 
 app.get('/weather', (req, res) => {
-	let weather = [];
-	weatherData.data.forEach((el) => {
-		const place = new Weather(el);
-		weather.push(place);
-	});
+  let weather = [];
+  weatherData.data.forEach((el) => {
+    const place = new Weather(el);
+    weather.push(place);
+  });
 
-	res.json(weather);
+  res.json(weather);
 });
 
 function Location(data) {
-	this.search_query = 'Lynnwood';
-	this.display_name = data[0].display_name;
-	this.lat = data[0].lat;
-	this.lon = data[0].lon;
+  this.search_query = 'Lynnwood';
+  this.display_name = data[0].display_name;
+  this.lat = data[0].lat;
+  this.lon = data[0].lon;
 }
 
 function Weather(data) {
-	this.forecast = data.weather.description;
-	this.time = data.datetime;
+  this.forecast = data.weather.description;
+  this.time = data.datetime;
 }
 
 app.use('*', (req, res) => {
-	res.status(500).json({
-		status: 500,
-		errorMessage: 'Sorry, something went wrong',
-	});
+  res.status(500).json({
+    status: 500,
+    errorMessage: 'Sorry, something went wrong',
+  });
 });
 
 app.listen(PORT, () => {
-	console.log(`listening on port ${PORT}`);
+  console.log(`listening on port ${PORT}`);
 });
