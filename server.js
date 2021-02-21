@@ -9,6 +9,8 @@ const weatherData = require('./data/weather.json');
 
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+
 app.use(cors());
 
 app.get('/', (req, res) => {
@@ -49,7 +51,6 @@ app.use('*', (req, res) => {
 	});
 });
 
-const PORT = process.env.PORT || 17001;
 app.listen(PORT, () => {
 	console.log(`listening on port ${PORT}`);
 });
