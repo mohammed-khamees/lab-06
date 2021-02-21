@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
@@ -18,10 +20,14 @@ app.get('/location', (req, res) => {
 	res.json(place);
 });
 
-// app.get('/', (req, res) => {});
+app.get('/weather', (req, res) => {
+	let weather = [];
+	weatherData.data.forEach((el) => {
+		const place = new Weather(el);
+		weather.push(place);
+	});
 
-app.use('*', (req, res) => {
-	res.send('Page not Found');
+	res.json(weather);
 });
 
 function Location(data) {
@@ -30,6 +36,15 @@ function Location(data) {
 	this.lat = data[0].lat;
 	this.lon = data[0].lon;
 }
+
+function Weather(data) {
+	this.forecast = data.weather.description;
+	this.time = data.datetime;
+}
+
+app.use('*', (req, res) => {
+	res.status(404).send('Page Not Found');
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
