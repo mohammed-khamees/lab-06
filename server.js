@@ -49,7 +49,7 @@ app.use('*', (req, res) => {
 	});
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT_env || 3000;
 app.listen(PORT, () => {
 	console.log(`listening on port ${PORT}`);
 });
