@@ -1,56 +1,34 @@
 'use strict';
 
 const express = require('express');
-require('dotenv').config();
 const cors = require('cors');
+require('dotenv').config();
+const superagent = require('superagent');
 
-const locationData = require('./data/location.json');
-const weatherData = require('./data/weather.json');
+//routes controllers
+const {
+	homeHandler,
+	locationHandler,
+	weatherHandler,
+	parkHandler,
+	notFoundRouteHandler,
+	errorHandler,
+} = require('./controllers/modules');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Home Page');
-});
+//routes
+app.get('/', homeHandler);
+app.get('/location', locationHandler);
+app.get('/weather', weatherHandler);
+app.get('/parks', parkHandler);
+app.get('*', notFoundRouteHandler);
+app.use(errorHandler);
 
-app.get('/location', (req, res) => {
-  const place = new Location(locationData);
-  res.json(place);
-});
-
-app.get('/weather', (req, res) => {
-  let weather = [];
-  weatherData.data.forEach((el) => {
-    const place = new Weather(el);
-    weather.push(place);
-  });
-
-  res.json(weather);
-});
-
-function Location(data) {
-  this.search_query = 'Lynnwood';
-  this.display_name = data[0].display_name;
-  this.lat = data[0].lat;
-  this.lon = data[0].lon;
-}
-
-function Weather(data) {
-  this.forecast = data.weather.description;
-  this.time = data.datetime;
-}
-
-app.use('*', (req, res) => {
-  res.status(500).json({
-    status: 500,
-    errorMessage: 'Sorry, something went wrong',
-  });
-});
-
+//app listening
+const PORT = process.env.PORT_env || 3000;
 app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
+	console.log(`listening on port ${PORT}`);
 });
