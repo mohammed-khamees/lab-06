@@ -1,6 +1,7 @@
 require('dotenv').config();
 const superagent = require('superagent');
 
+//handlers
 function homeHandler(req, res) {
 	res.send('Home Page');
 }
