@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 const superagent = require('superagent');
 
-routes controllers
+//routes controllers
 const {
 	homeHandler,
 	locationHandler,
