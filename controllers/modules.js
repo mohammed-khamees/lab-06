@@ -19,11 +19,10 @@ function locationHandler(req, res) {
 }
 
 function weatherHandler(req, res) {
-	let lat = req.query.lat;
-	let lon = req.query.lon;
+	let city = req.query.city;
 
 	let key = process.env.WEATHER_API_KEY;
-	let url = `https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lon}&key=${key}&include=minutely`;
+	let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city},NC&key=${key}`;
 
 	superagent.get(url).then((data) => {
 		const locData = data.body;
