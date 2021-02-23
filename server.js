@@ -70,6 +70,7 @@ function weatherHandler(req, res) {
 	let city = req.query.search_query;
 
 	let key = process.env.WEATHER_API_KEY;
+
 	let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city},NC&key=${key}`;
 
 	superagent.get(url).then((data) => {
