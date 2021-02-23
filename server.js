@@ -7,6 +7,7 @@ const superagent = require('superagent');
 const pg = require('pg');
 
 const app = express();
+const PORT = process.env.PORT_env || 3030;
 
 app.use(cors());
 
@@ -71,9 +72,11 @@ function locationHandler(req, res) {
 
 function weatherHandler(req, res) {
 	let city = req.query.search_query;
+	const lat = req.query.latitude;
+	const lon = req.query.longitude;
 
 	let key = process.env.WEATHER_API_KEY;
-	let url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city},NC&key=${key}`;
+	const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city},NC&key=${key}&lat=${lat}&lon=${lon}`;
 
 	superagent.get(url).then((data) => {
 		const locData = data.body;
@@ -140,11 +143,6 @@ app.get('*', notFoundRouteHandler);
 app.use(errorHandler);
 
 //app listening
-const PORT = process.env.PORT_env || 3000;
-
 client.connect().then(() => {
 	app.listen(PORT, () => console.log(`listening on PORT ${PORT}`));
 });
-// .catch((error, req, res) => {
-// 	res.status(500).json('Error', error.message);
-// });
