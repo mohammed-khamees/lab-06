@@ -3,18 +3,8 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const pg = require('pg');
 const superagent = require('superagent');
-
-//routes controllers
-// const {
-// 	homeHandler,
-// 	locationHandler,
-// 	weatherHandler,
-// 	parkHandler,
-// 	notFoundRouteHandler,
-// 	errorHandler,
-// } = require('./controllers/modules');
+const pg = require('pg');
 
 const app = express();
 
@@ -115,14 +105,6 @@ function errorHandler(error, req, res) {
 	res.status(500).json(error);
 }
 
-//routes
-app.get('/', homeHandler);
-app.get('/location', locationHandler);
-app.get('/weather', weatherHandler);
-app.get('/parks', parkHandler);
-app.get('*', notFoundRouteHandler);
-app.use(errorHandler);
-
 //constructors functions
 function Location(city, data) {
 	this.search_query = city;
@@ -145,6 +127,14 @@ function Park(data) {
 	this.description = data.description;
 	this.url = data.url;
 }
+
+//routes
+app.get('/', homeHandler);
+app.get('/location', locationHandler);
+app.get('/weather', weatherHandler);
+app.get('/parks', parkHandler);
+app.get('*', notFoundRouteHandler);
+app.use(errorHandler);
 
 //app listening
 const PORT = process.env.PORT_env || 3000;
