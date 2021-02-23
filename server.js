@@ -15,6 +15,7 @@ const client = new pg.Client({
 	connectionString: process.env.DATABASE_URL,
 	ssl: { rejectUnauthorized: false },
 });
+// const client = new pg.Client(process.env.DATABASE_URL);
 
 // //handlers
 function homeHandler(req, res) {
@@ -72,12 +73,10 @@ function locationHandler(req, res) {
 
 function weatherHandler(req, res) {
 	let city = req.query.search_query;
-	const lat = req.query.latitude;
-	const lon = req.query.longitude;
 
 	let key = process.env.WEATHER_API_KEY;
 
-	const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city},NC&key=${key}&lat=${lat}&lon=${lon}`;
+	const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city},NC&key=${key}`;
 
 	superagent.get(url).then((data) => {
 		const locData = data.body;
