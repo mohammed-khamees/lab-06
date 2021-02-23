@@ -142,11 +142,9 @@ app.use(errorHandler);
 //app listening
 const PORT = process.env.PORT_env || 3000;
 
-client
-	.connect()
-	.then(() => {
-		app.listen(PORT, () => console.log(`listening on PORT ${PORT}`));
-	})
-	.catch((error, req, res) => {
-		res.send('Error', error.message);
-	});
+client.connect().then(() => {
+	app.listen(PORT, () => console.log(`listening on PORT ${PORT}`));
+});
+// .catch((error, req, res) => {
+// 	res.status(500).json('Error', error.message);
+// });
