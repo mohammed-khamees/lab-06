@@ -5,9 +5,11 @@ const superagent = require('superagent');
 
 //handlers
 function movieHandler(req, res) {
+	let city = req.query.search_query;
 	let key = process.env.MOVIE_API_KEY;
 
-	const url = `https://api.themoviedb.org/3/movie/popular?api_key=${key}`;
+	const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${city}&language=de-DE&region=DE
+`;
 
 	superagent.get(url).then((data) => {
 		const locData = data.body;
