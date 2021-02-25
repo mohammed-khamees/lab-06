@@ -42,7 +42,6 @@ function locationHandler(req, res) {
 					client
 						.query(SQL, safeValues)
 						.then((results) => {
-							locationData;
 							res.json(results.rows);
 						})
 						.catch((error) => {
